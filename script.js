@@ -1,25 +1,24 @@
 const choices = ['rock', 'paper', 'scissor'];
-const regex = /(rock|paper|scissor)/;
+const regex = /(rock|paper|scissor)/i;
 let userSelection = '';
 let cpuSelection = '';
 let winner;
 
 //This function will randomly generate a number betwenn 0 and 2, and use it as the index to choose 
 //from the options in the choices array
-
 let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
 
 
-
 //This will prompt the user for his choice and check if the value matches the options.
-//If it does it will return that value. Otherwise it's going to prompt the user again until 
-//the value is valid or the user hits cancel.
 function userPlay() {
-    let choice = prompt("Choose rock, paper or scissor: ").toLowerCase();
-    if (regex.test(choice) != true) { //This checks if the prompt value is valid and prompts the user agaiing if it isn't
+    let choice = prompt("Choose rock, paper or scissor: ");
+    console.log(choice);
+    if (regex.test(choice) != true) { //This checks if the prompt value is valid and prompts the user again if it isn't  
+        if (choice === null) return;
         choice = prompt("Not valid, try again: ");   
-    } 
-    return choice;   
+    }
+    
+    return choice.toLowerCase();   
 }
 
 
@@ -61,7 +60,8 @@ function playRound(user, cpu) {
     return (result, winner);
 }
 
-function gameResult(userScore, cpuScore) { //This checks the score to return the overall result
+
+function gameResult(userScore, cpuScore) { //This checks the score to return the overall result.
     let overallWinner = '';
     if (userScore > cpuScore) { 
         return overallWinner = "Congratulations!! You won";
@@ -73,15 +73,16 @@ function gameResult(userScore, cpuScore) { //This checks the score to return the
     return overallWinner;
 }
 
+
 //The game() function will call the other function 5 times to make the game 5 rounds, 
-//keeping score after each round is played and at the end of the loop compare the user and cpu score
-//to give the final result.
+//keeping score after each round is played.
 function game() { 
     let cpuScore = 0;
     let userScore = 0;
     for (i = 0; i < 5; i++) { //Loop to play a 5 round game
         userSelection = userPlay();
-        if (userSelection === null) break;
+        console.log(userSelection);
+        if (userSelection == undefined) break;
         cpuSelection = cpuPlay();
         playRound(userSelection, cpuSelection);
         if (winner == 1) {
