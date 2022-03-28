@@ -12,7 +12,6 @@ let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
 //This will prompt the user for his choice and check if the value matches the options.
 function userPlay() {
     let choice = prompt("Choose rock, paper or scissor: ");
-    console.log(choice);
     if (regex.test(choice) != true) { //This checks if the prompt value is valid and prompts the user again if it isn't  
         if (choice === null) return;
         choice = prompt("Not valid, try again: ");   
@@ -81,7 +80,6 @@ function game() {
     let userScore = 0;
     for (i = 0; i < 5; i++) { //Loop to play a 5 round game
         userSelection = userPlay();
-        console.log(userSelection);
         if (userSelection == undefined) break;
         cpuSelection = cpuPlay();
         playRound(userSelection, cpuSelection);
@@ -90,7 +88,7 @@ function game() {
         } else if (winner == 2) {
             cpuScore++;
         }
-        console.log(userScore, cpuScore);
+        console.log(`User: ${userScore} v CPU: ${cpuScore}`);
     }
     console.log(gameResult(userScore, cpuScore));
 }
