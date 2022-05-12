@@ -62,7 +62,9 @@ function playRound(user, cpu) {
 
 function gameResult(userScore, cpuScore) { //This checks the score to return the overall result.
     let overallWinner = '';
-    if (userScore > cpuScore) { 
+    if (userSelection == null) {
+        return overallWinner = "No constest";
+    } else if (userScore > cpuScore) { 
         return overallWinner = "Congratulations!! You won";
     } else if (cpuScore > userScore) {
         return overallWinner = "Better luck next time...";
@@ -80,7 +82,7 @@ function game() {
     let userScore = 0;
     for (i = 0; i < 5; i++) { //Loop to play a 5 round game
         userSelection = userPlay();
-        if (userSelection == undefined) break;
+        if (userSelection == null) break;
         cpuSelection = cpuPlay();
         playRound(userSelection, cpuSelection);
         if (winner == 1) {
