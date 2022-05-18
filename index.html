@@ -4,13 +4,31 @@
 
         <Title>Rock Paper Scissor</Title>
         <meta charset="UTF-8">
-        <script src="./script.js"></script> 
+        <script src="./script.js" defer></script> 
+        <link rel="stylesheet" href="style.css">
 
     </head>
 
     
     <body>
+        <div class="container">
+            
+            <div id="start" class="active">
+                <button id="play">Click to play</button>
+            </div>
 
-     
+            <div id="result" class="hidden">
+                <span id="userScore" class="score">0</span>
+                <span>vs</span>
+                <span id="cpuScore" class="score">0</span>
+            </div>
+
+            <div id="btns" class="hidden">
+                <button id="rock">Rock</button>
+                <button id="paper">Paper</button>
+                <button id="scissor">Scissor</button>
+            </div>
+
+        </div> 
     </body>
 </html>
