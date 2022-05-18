@@ -3,26 +3,32 @@ const regex = /(rock|paper|scissor)/i;
 let userSelection = '';
 let cpuSelection = '';
 let winner;
+let choice = '';
 
 //This function will randomly generate a number betwenn 0 and 2, and use it as the index to choose 
 //from the options in the choices array
 let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
 
+//Button choice event listener
+const userPlay = window.addEventListener('click', function(e){
+    if (e.target.tagName == 'BUTTON'){
+        return choice = e.target.id;
+    }
+});
 
 //This will prompt the user for his choice and check if the value matches the options.
-function userPlay() {
-    let choice = prompt("Choose rock, paper or scissor: ");
+/*function userPlay(e) {
     if (regex.test(choice) != true) { //This checks if the prompt value is valid and prompts the user again if it isn't  
         if (choice === null) return;
         choice = prompt("Not valid, try again: ");   
     }
     
     return choice.toLowerCase();   
-}
+}*/
 
 
-//This function will compare the values given by the user and cpu choices, determine the result 
-//and return the corresponding phrase and numerical value to be used in the game() function to keep score.
+/*This function will compare the values given by the user and cpu choices, determine the result 
+and return the corresponding phrase and numerical value to be used in the game() function to keep score.*/
 function playRound(user, cpu) {
     let result = '';
     switch(true) {
@@ -62,15 +68,11 @@ function playRound(user, cpu) {
 
 function gameResult(userScore, cpuScore) { //This checks the score to return the overall result.
     let overallWinner = '';
-    if (userSelection == null) {
-        return overallWinner = "No constest";
-    } else if (userScore > cpuScore) { 
+    if (userScore == 5) { 
         return overallWinner = "Congratulations!! You won";
-    } else if (cpuScore > userScore) {
+    } else {
         return overallWinner = "Better luck next time...";
-    } else  if (cpuScore == userScore) {
-        return overallWinner = "That's a tie";
-    }
+    } 
     return overallWinner;
 }
 
@@ -80,8 +82,9 @@ function gameResult(userScore, cpuScore) { //This checks the score to return the
 function game() { 
     let cpuScore = 0;
     let userScore = 0;
-    for (i = 0; i < 5; i++) { //Loop to play a 5 round game
-        userSelection = userPlay();
+    while (cpuScore < 5 && userScore < 5){
+        userSelection = userPlay;
+        console.log(userSelection);
         if (userSelection == null) break;
         cpuSelection = cpuPlay();
         playRound(userSelection, cpuSelection);
