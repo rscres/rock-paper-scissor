@@ -9,22 +9,14 @@ let choice = '';
 //from the options in the choices array
 let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
 
+
 //Button choice event listener
 const userPlay = window.addEventListener('click', function(e){
-    if (e.target.tagName == 'BUTTON'){
-        return choice = e.target.id;
+    if (e.target.className == 'btn'){
+        return e.target.id;
+        console.log(e.target.id)
     }
 });
-
-//This will prompt the user for his choice and check if the value matches the options.
-/*function userPlay(e) {
-    if (regex.test(choice) != true) { //This checks if the prompt value is valid and prompts the user again if it isn't  
-        if (choice === null) return;
-        choice = prompt("Not valid, try again: ");   
-    }
-    
-    return choice.toLowerCase();   
-}*/
 
 
 /*This function will compare the values given by the user and cpu choices, determine the result 
@@ -70,10 +62,9 @@ function gameResult(userScore, cpuScore) { //This checks the score to return the
     let overallWinner = '';
     if (userScore == 5) { 
         return overallWinner = "Congratulations!! You won";
-    } else {
+    } else  if (userScore == 5) {
         return overallWinner = "Better luck next time...";
     } 
-    return overallWinner;
 }
 
 
@@ -98,7 +89,19 @@ function game() {
     console.log(gameResult(userScore, cpuScore));
 }
 
-game();
+
+//Start button
+const start = window.addEventListener('click', function(e){
+    if (e.target.id == 'play'){
+        const start = this.document.querySelector('#start');
+        start.classList.add('hidden');
+        const result = document.querySelector('#result');
+        result.classList.remove('hidden');
+        const btns = document.querySelector('#btns');
+        btns.classList.remove('hidden');
+        game();
+    }
+})
 
 
 

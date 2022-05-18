@@ -20,8 +20,20 @@ body {
     visibility: hidden;
 }
 
-/*Scoreboard*/
+/*Start button*/
+#play {
+    font-size: 20px;
+    border-radius: 5px;
+}
 
+/*Scoreboard*/
+#result{
+    border-style: double;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 20px 10px; 
+    margin-bottom: 10px;
+}
 .score {
     border-style: double;
     border-width: 2px;
@@ -30,9 +42,4 @@ body {
     font-size: large;
 }
 
-/*Start button*/
 
-#play {
-    font-size: 20px;
-    border-radius: 5px;
-}
