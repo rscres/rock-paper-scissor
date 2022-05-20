@@ -1,28 +1,76 @@
 const choices = ['rock', 'paper', 'scissor'];
-const regex = /(rock|paper|scissor)/i;
+const userScoreboard = document.querySelector('#userScore');
+const cpuScoreboard = document.querySelector('#cpuScore');
 let userSelection = '';
 let cpuSelection = '';
-let winner;
-let choice = '';
+let choice;
+let result;
+let userScore = 0;
+let cpuScore = 0;
+
+//Start button
+const start = window.addEventListener('click', function(e){
+    if (e.target.className == 'play'){
+        userScoreboard.textContent = userScore;
+        cpuScoreboard.textContent = cpuScore;
+        userPlay();
+        const start = this.document.querySelector('#start');
+        start.classList.add('hidden');
+        const score = document.querySelector('#scoreboard');
+        score.classList.remove('hidden');
+        const btns = document.querySelector('#btns');
+        btns.classList.remove('hidden');
+        const restart = document.querySelector('#gameResult');
+        restart.classList.add('hidden'); 
+    }   
+});
+
+
+//Button choice event listener
+let userPlay = function() {
+    const playButtons = document.querySelectorAll('.btn');
+    playButtons.forEach(function(button) {
+        button.addEventListener('click', function(e){
+            choice = e.target.id; 
+            game(choice); 
+        })
+    })   
+};
+
+
+//The game() function will call the other function 5 times to make the game 5 rounds, 
+//keeping score after each round is played.
+function game() { 
+    userSelection = choice;
+    console.log(userSelection);
+    cpuSelection = cpuPlay();
+    roundResult(userSelection, cpuSelection);
+    if (userScore >= 5 || cpuScore >= 5) {
+        gameResult(userScore, cpuScore);
+        userScore = 0;
+        cpuScore = 0;
+    }
+    if (winner == 1) {
+        userScore++;
+        userScoreboard.textContent = userScore;
+    } else if (winner == 2) {
+        cpuScore++
+        cpuScoreboard.textContent = cpuScore;
+    }
+}
+
 
 //This function will randomly generate a number betwenn 0 and 2, and use it as the index to choose 
 //from the options in the choices array
 let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
 
 
-//Button choice event listener
-const userPlay = window.addEventListener('click', function(e){
-    if (e.target.className == 'btn'){
-        return e.target.id;
-        console.log(e.target.id)
-    }
-});
-
 
 /*This function will compare the values given by the user and cpu choices, determine the result 
 and return the corresponding phrase and numerical value to be used in the game() function to keep score.*/
-function playRound(user, cpu) {
-    let result = '';
+function roundResult(user, cpu) {
+    console.log(user, cpu);
+    result = '';
     switch(true) {
         case user === 'paper' && cpu === 'rock':
             result = "You win!! Paper beats rock";
@@ -53,57 +101,36 @@ function playRound(user, cpu) {
             winner = 0;
             break;
     }
-    console.log(result);
+    const roundResult = document.querySelector('#roundOutput');
+    roundResult.textContent = result;
     return (result, winner);
-}
+};
 
 
 function gameResult(userScore, cpuScore) { //This checks the score to return the overall result.
-    let overallWinner = '';
+    const overallWinner = document.querySelector('#gameResult');
+    const roundResult = document.querySelector('#roundResult');
     if (userScore == 5) { 
-        return overallWinner = "Congratulations!! You won";
-    } else  if (userScore == 5) {
-        return overallWinner = "Better luck next time...";
-    } 
-}
+        overallWinner.firstElementChild.textContent = "Congratulations!! You won";
+    } else if (cpuScore == 5) {
+        overallWinner.firstElementChild.textContent = "Better luck next time...";
+    }
+    roundResult.classList.add('hidden');
+    overallWinner.classList.remove('hidden');
+};
 
-
-//The game() function will call the other function 5 times to make the game 5 rounds, 
-//keeping score after each round is played.
-function game() { 
-    let cpuScore = 0;
-    let userScore = 0;
-    while (cpuScore < 5 && userScore < 5){
-        userSelection = userPlay;
-        console.log(userSelection);
-        if (userSelection == null) break;
-        cpuSelection = cpuPlay();
-        playRound(userSelection, cpuSelection);
-        if (winner == 1) {
-            userScore++;
-        } else if (winner == 2) {
-            cpuScore++;
+/*function replay() {
+    const restart = document.querySelector('#gameResult');
+    restart.addEventListener('click', function(e){
+        if (e.target.tagName == 'BUTTON'){
+            userScoreboard.textContent = userScore;
+            cpuScoreboard.textContent = cpuScore;
+            console.log()
+            userPlay();
+            restart.classList.add('hidden');  
         }
-        console.log(`User: ${userScore} v CPU: ${cpuScore}`);
-    }
-    console.log(gameResult(userScore, cpuScore));
-}
-
-
-//Start button
-const start = window.addEventListener('click', function(e){
-    if (e.target.id == 'play'){
-        const start = this.document.querySelector('#start');
-        start.classList.add('hidden');
-        const result = document.querySelector('#result');
-        result.classList.remove('hidden');
-        const btns = document.querySelector('#btns');
-        btns.classList.remove('hidden');
-        game();
-    }
-})
-
-
+    })
+};*/
 
 
 
