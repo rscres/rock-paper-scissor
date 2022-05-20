@@ -3,8 +3,7 @@
     <head>
 
         <Title>Rock Paper Scissor</Title>
-        <meta charset="UTF-8">
-        <script src="./script.js" defer></script> 
+        <meta charset="UTF-8"> 
         <link rel="stylesheet" href="style.css">
 
     </head>
@@ -14,21 +13,34 @@
         <div class="container">
             
             <div id="start">
-                <button id="play">Click to play</button>
+                <button class="play">Click to play</button>
             </div>
 
-            <div id="result" class="hidden">
+            <div id="scoreboard" class="hidden">
                 <span id="userScore" class="score">0</span>
-                <span>vs</span>
+                <span id="vs">vs</span>
                 <span id="cpuScore" class="score">0</span>
             </div>
 
             <div id="btns" class="hidden">
-                <button id="rock" class="btn">Rock</button>
-                <button id="paper" class="btn">Paper</button>
-                <button id="scissor" class="btn">Scissor</button>
+                <button id="rock" class="btn">✊</button>
+                <button id="paper" class="btn">✋</button>
+                <button id="scissor" class="btn">✌️</button>
             </div>
 
+            <div id="result">
+                <div id="roundResult">
+                    <p id="roundOutput"></p>
+                </div>
+                <div id="gameResult" class="hidden">
+                    <p id="gameOutput"></p>
+                    <button class="play">Play again</button>
+                </div>
+            </div>
+
+
+
         </div> 
+        <script src="./script.js"></script>
     </body>
 </html>
