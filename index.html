@@ -8,7 +8,6 @@
 
     </head>
 
-    
     <body>
         <div class="container">
             
@@ -17,9 +16,13 @@
             </div>
 
             <div id="scoreboard" class="hidden">
-                <span id="userScore" class="score">0</span>
-                <span id="vs">vs</span>
-                <span id="cpuScore" class="score">0</span>
+                <span class="player">User</span>
+                <div class="scores">
+                    <span id="userScore" class="score">0</span>
+                    <span id="vs">vs</span>
+                    <span id="cpuScore" class="score">0</span>
+                </div>
+                <span class="player">CPU</span>
             </div>
 
             <div id="btns" class="hidden">
@@ -34,11 +37,9 @@
                 </div>
                 <div id="gameResult" class="hidden">
                     <p id="gameOutput"></p>
-                    <button class="play">Play again</button>
+                    <button class="replay">Play again</button>
                 </div>
             </div>
-
-
 
         </div> 
         <script src="./script.js"></script>

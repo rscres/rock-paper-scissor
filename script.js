@@ -1,6 +1,9 @@
-const choices = ['rock', 'paper', 'scissor'];
+const CHOICES = ['rock', 'paper', 'scissor'];
 const userScoreboard = document.querySelector('#userScore');
 const cpuScoreboard = document.querySelector('#cpuScore');
+const playButtons = document.querySelectorAll('.btn');
+const overallWinner = document.querySelector('#gameResult');
+const roundDiv = document.querySelector('#roundResult');
 let userSelection = '';
 let cpuSelection = '';
 let choice;
@@ -19,21 +22,29 @@ const start = window.addEventListener('click', function(e){
         const score = document.querySelector('#scoreboard');
         score.classList.remove('hidden');
         const btns = document.querySelector('#btns');
-        btns.classList.remove('hidden');
+        btns.classList.remove('hidden'); 
+    } else if (e.target.className == 'replay') {
+        userScoreboard.textContent = userScore;
+        cpuScoreboard.textContent = cpuScore;
+        userPlay();
         const restart = document.querySelector('#gameResult');
-        restart.classList.add('hidden'); 
-    }   
+        restart.classList.add('hidden');
+        roundDiv.classList.remove('hidden');
+        roundDiv.firstElementChild.textContent = '';
+    }
 });
 
 
 //Button choice event listener
+function choose(e) {
+    choice = e.target.id; 
+    game(choice); 
+    choice = '';
+}
+
 let userPlay = function() {
-    const playButtons = document.querySelectorAll('.btn');
     playButtons.forEach(function(button) {
-        button.addEventListener('click', function(e){
-            choice = e.target.id; 
-            game(choice); 
-        })
+        button.addEventListener('click', choose)
     })   
 };
 
@@ -45,11 +56,6 @@ function game() {
     console.log(userSelection);
     cpuSelection = cpuPlay();
     roundResult(userSelection, cpuSelection);
-    if (userScore >= 5 || cpuScore >= 5) {
-        gameResult(userScore, cpuScore);
-        userScore = 0;
-        cpuScore = 0;
-    }
     if (winner == 1) {
         userScore++;
         userScoreboard.textContent = userScore;
@@ -57,12 +63,17 @@ function game() {
         cpuScore++
         cpuScoreboard.textContent = cpuScore;
     }
+    if (userScore >= 5 || cpuScore >= 5) {
+        gameResult(userScore, cpuScore);
+        userScore = 0;
+        cpuScore = 0;
+    }
 }
 
 
 //This function will randomly generate a number betwenn 0 and 2, and use it as the index to choose 
 //from the options in the choices array
-let cpuPlay = () => choices[Math.floor(Math.random() * 3)];
+let cpuPlay = () => CHOICES[Math.floor(Math.random() * 3)];
 
 
 
@@ -73,27 +84,15 @@ function roundResult(user, cpu) {
     result = '';
     switch(true) {
         case user === 'paper' && cpu === 'rock':
-            result = "You win!! Paper beats rock";
-            winner = 1;
-            break;
         case user === 'rock' && cpu === 'scissor':
-            result = "You win!! Rock beats scissor";
-            winner = 1;
-            break;
         case user === 'scissor' && cpu === 'paper':
-            result = "You win!! Scissor beats paper";
+            result = `You win!! ${user} beats ${cpu}`;
             winner = 1;
             break;
         case cpu === 'paper' && user === 'rock':
-            result = "You lose... paper beats rock";
-            winner = 2;
-            break;
         case cpu === 'rock' && user === 'scissor':
-            result = "You lose... rock beats scissor";
-            winner = 2;
-            break;
         case cpu === 'scissor' && user === 'paper':
-            result = "You lose... scissor beats paper";
+            result = `You lose... ${cpu} beats ${user}`;
             winner = 2;
             break;
         case cpu === user:
@@ -101,36 +100,26 @@ function roundResult(user, cpu) {
             winner = 0;
             break;
     }
-    const roundResult = document.querySelector('#roundOutput');
-    roundResult.textContent = result;
+    const resultOutput = document.querySelector('#roundOutput');
+    resultOutput.textContent = result;
     return (result, winner);
 };
 
 
 function gameResult(userScore, cpuScore) { //This checks the score to return the overall result.
-    const overallWinner = document.querySelector('#gameResult');
-    const roundResult = document.querySelector('#roundResult');
+    playButtons.forEach(function(button) {
+        button.removeEventListener('click', choose)
+    });
     if (userScore == 5) { 
         overallWinner.firstElementChild.textContent = "Congratulations!! You won";
     } else if (cpuScore == 5) {
         overallWinner.firstElementChild.textContent = "Better luck next time...";
     }
-    roundResult.classList.add('hidden');
+    roundDiv.classList.add('hidden');
     overallWinner.classList.remove('hidden');
 };
 
-/*function replay() {
-    const restart = document.querySelector('#gameResult');
-    restart.addEventListener('click', function(e){
-        if (e.target.tagName == 'BUTTON'){
-            userScoreboard.textContent = userScore;
-            cpuScoreboard.textContent = cpuScore;
-            console.log()
-            userPlay();
-            restart.classList.add('hidden');  
-        }
-    })
-};*/
+
 
 
 
